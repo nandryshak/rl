@@ -1,31 +1,17 @@
-// mingw32-g++ -IC:\SFML-2.1\include -c main.cpp -o main.o
-// mingw32-g++ -LC:\SFML-2.1\lib -o run.exe main.o -s -lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics -lsfml-window -lsfml-system -mwindows
+#include <SFML/Window.hpp>
 
-#include <SFML/Graphics.hpp>
- 
 int main()
 {
-    // Create the main window
-    sf::RenderWindow App(sf::VideoMode(800, 600, 32), "Hello World - SFML");
- 
-    // Start the main loop
-    while (App.isOpen())
-    {
-        // Process events
-        sf::Event Event;
-        while (App.pollEvent(Event))
-        {
-            // Close window : exit
-            if (Event.type == sf::Event::Closed)
-                App.close();
+    sf::Window window(sf::VideoMode(800, 600), "Test Window Please Ignore");
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
         }
- 
-        // Clear screen, and fill it with blue
-        App.clear(sf::Color(0x00, 0x00, 0xff));
- 
-        // Display the content of the window on screen
-        App.display();
     }
- 
+
     return 0;
 }
