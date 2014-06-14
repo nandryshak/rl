@@ -1,13 +1,13 @@
 CC=mingw32-g++
-CFLAGS=-c -Wall -O2
+CFLAGS=-c -Wall -O2 -DSFML_STATIC
 INCLUDES=-IC:\SFML-2.1\include
 LIBS=-LC:\SFML-2.1\lib
-SFMLFLAGS=-lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics -lsfml-window -lsfml-system -mwindows
+SFMLFLAGS=-lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -mwindows
 
 all: game
 
 game: main.o
-	$(CC) $(LIBS) -o game.exe main.o -s $(SFMLFLAGS)
+	$(CC) $(LIBS) -o game.exe main.o $(SFMLFLAGS)
 
 main.o: main.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -c main.cpp
