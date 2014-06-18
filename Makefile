@@ -1,5 +1,5 @@
 CC=mingw32-g++
-CFLAGS=-c -Wall -O2 -DSFML_STATIC
+CFLAGS=-Wall -O2 -DSFML_STATIC
 INCLUDES=-IC:\SFML-2.1\include
 LIBS=-LC:\SFML-2.1\lib
 SFMLFLAGS=-lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -mwindows
