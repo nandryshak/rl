@@ -1,4 +1,3 @@
-// make clean && mingw32-g++ -DSFML_STATIC -IC:\SFML-2.1\include -c tile.cpp map.cpp && mingw32-g++ -LC:\SFML-2.1\lib -o game.exe tile.o map.o -lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -mwindows
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "map.hpp"
@@ -11,6 +10,7 @@ Map::Map(int x, int y) : xSize(x), ySize(y)
     std::vector<Tile> row(x, emptyTile);
     std::vector<std::vector<Tile> > mv(y, row);
     map_vec = mv;
+    // initialize a default tile size
     tileYSize = 24;
     tileXSize = 16;
 }

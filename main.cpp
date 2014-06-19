@@ -6,17 +6,19 @@
 
 int main()
 {
+    // seed random number gen
     srand(time(0));
+
+    // window size (in tiles)
     int charsWide = 80;
     int charsTall = 24;
 
     Map testMap(charsWide, charsTall);
     testMap.FillMap('X');
 
-    int tileHeight = 24;
+    int tileHeight = 15;
     int tileWidth = tileHeight / 3 * 2;
     testMap.SetTileSize(tileHeight);
-    
 
     int screenWidth = tileWidth * charsWide;
     int screenHeight = tileHeight * charsTall;
@@ -24,7 +26,6 @@ int main()
                             sf::Style::Titlebar | sf::Style::Close);
     window.clear();
 
-    Tile testTest();
     testMap.DrawMap(window);
 
     window.display();
