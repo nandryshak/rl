@@ -6,14 +6,14 @@
 
 class Map {
 public:
-    Map(int, int);
+    Map(int x, int y);
     ~Map();
     void DrawMap(sf::RenderWindow &win);
-    void FillMap(char);
+    void FillMap(char ch);
     void PrintMap();
     int ySize;
     int xSize;
-    void SetTileSize(int);
+    void SetTileSize(int y);
     std::string mapName;
     std::vector<std::vector<Tile> > map_vec;
 private:

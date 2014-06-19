@@ -11,7 +11,7 @@ class Tile {
 public:
     Tile(sf::Color fg = getRandomColor(), sf::Color bg = getRandomColor(), char ch = getRandomChar());
     ~Tile();
-    void DrawTile(int, int);
+    void DrawTile(int x, int y);
     sf::Color fgColor;
     sf::Color bgColor;
     char tileChar;
