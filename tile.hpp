@@ -9,7 +9,7 @@ char getRandomChar();
 
 class Tile {
 public:
-    Tile(sf::Color, sf::Color, char ch);
+    Tile(sf::Color fg = getRandomColor(), sf::Color bg = getRandomColor(), char ch = getRandomChar());
     ~Tile();
     void DrawTile(int, int);
     sf::Color fgColor;
@@ -19,5 +19,6 @@ private:
 };
 
 std::ostream& operator<<(std::ostream &strm, const Tile &t);
+std::ostream& operator<<(std::ostream &strm, const sf::Color &c);
 
 #endif

@@ -1,45 +1,31 @@
 // -*- compile-command: "make -k"; -*-
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
-int rand256()
-{
-    int num = rand() % 256;
-    return num;
-}
+#include "map.hpp"
+#include "tile.hpp"
 
 int main()
 {
-    int height = 24;
-    int width = height / 3 * 2;
+    srand(time(0));
     int charsWide = 80;
     int charsTall = 24;
 
-    int screenWidth = width * charsWide;
-    int screenHeight = height * charsTall;
-    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "nannyRL",
-                            sf::Style::Titlebar | sf::Style::Close);
+    Map testMap(charsWide, charsTall);
+    testMap.FillMap('X');
 
+    int tileHeight = 24;
+    int tileWidth = tileHeight / 3 * 2;
+    testMap.SetTileSize(tileHeight);
     
 
-    sf::Font font;
-    font.loadFromFile("DroidSansMono.ttf");
-    char randChar = 0;
-    sf::Text text(randChar, font, 24);
+    int screenWidth = tileWidth * charsWide;
+    int screenHeight = tileHeight * charsTall;
+    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "nannyRL",
+                            sf::Style::Titlebar | sf::Style::Close);
+    window.clear();
 
-    int min = 33;
-    int max = 126;
-
-    for (int ypos = 0; ypos < screenHeight - height; ypos += height) {
-        for (int xpos = 0; xpos < screenWidth - width; xpos += width) {
-            randChar = rand() % (max - min + 1) + min;
-            text.setString(randChar);
-            text.setPosition(xpos, ypos);
-            sf::Color color(rand256(), rand256(), rand256());
-            text.setColor(color);
-            window.draw(text);
-        }
-    }
+    Tile testTest();
+    testMap.DrawMap(window);
 
     window.display();
 
@@ -52,4 +38,6 @@ int main()
         }
 
     }
+
+    return 0;
 }
