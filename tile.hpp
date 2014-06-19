@@ -15,6 +15,10 @@ public:
     sf::Color fgColor;
     sf::Color bgColor;
     char tileChar;
+    static const Tile Wall;
+    static const Tile Floor;
+    static const Tile Door;
+    static const Tile Player;
 private:
 };
 

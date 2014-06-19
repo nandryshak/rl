@@ -3,9 +3,18 @@
 #include "tile.hpp"
 #include <cstdlib>
 
-Tile::Tile(sf::Color fg = getRandomColor(),
-           sf::Color bg = getRandomColor(),
-           char ch = getRandomChar()) :
+const sf::Color grey(84, 84, 84);
+const sf::Color black(0, 0, 0);
+const sf::Color white(255, 255, 255);
+
+const Tile Tile::Wall(grey, black, '#');
+const Tile Tile::Floor(grey, black, '.');
+const Tile Tile::Door(white, black, 'D');
+const Tile Tile::Player(white, black, '@');
+
+Tile::Tile(sf::Color fg,
+           sf::Color bg,
+           char ch) :
     fgColor(fg),
     bgColor(bg),
     tileChar(ch)
