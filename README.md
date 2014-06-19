@@ -2,5 +2,6 @@
 
 ## Compilation Dependencies:
 
-* SFML (Installed under C:\SFML-2.1\)
-* mingw32-g++ compiler
+* [mingw32-g++](http://www.mingw.org/) compile in path
+* [SFML 2.1 MinGW Edition](http://sfml-dev.org/download/sfml/2.1/) (Installed under C:\SFML-2.1\)
+
