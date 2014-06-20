@@ -6,17 +6,30 @@
 
 class Map {
 public:
-    Map(int x, int y);
+    Map(int x, int y);                   // 'structors
     ~Map();
-    void DrawMap(sf::RenderWindow &win);
-    void FillMap(char ch);
-    void PrintMap();
-    int ySize;
+
+    void DrawMap(sf::RenderWindow &win); // main draw function
+    void FillMap(char ch);               // fill map with a char. Don't use.
+    void PrintMap();                     // print our each tiles char in text
+
+    int ySize;                           // useless right now
     int xSize;
+
     void SetTileSize(int y);
     std::string mapName;
-    std::vector<std::vector<GameTile> > map_vec;
+
+    void GenerateRooms(int rooms = rand() % 7 + 3); // default of 3-9 rooms
 private:
+    // GENERATION
+    void AddRooms(int rooms); 
+    void AddDoors();
+    void ConnectDoors();
+
+    // ADDING MAP SHAPES
+    bool PaintRectangle(int width, int height, int x, int y);
+
+    std::vector<std::vector<GameTile> > map_vec;
     int tileXSize;
     int tileYSize;
 };

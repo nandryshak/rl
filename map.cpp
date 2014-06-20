@@ -5,9 +5,9 @@
 #include "graphictile.hpp"
 #include <vector>
 
-Map::Map(int x, int y) : xSize(x), ySize(y)
+Map::Map(int x, int y) : xSize(x), ySize(y) // useless size vars
 {
-    GameTile emptyTile("Nothing", GraphicTile(sf::Color::Black, sf::Color::White, 'X'));
+    GameTile emptyTile("Nothing", GraphicTile::Hallway);
     std::vector<GameTile> row(x, emptyTile);
     std::vector<std::vector<GameTile> > mv(y, row);
     map_vec = mv;
@@ -20,7 +20,7 @@ Map::~Map()
 {
 }
 
-void Map::FillMap(char ch)
+void Map::FillMap(char ch)      // test member please ignore
 {
     std::vector<std::vector<GameTile> >::iterator rowIter;
     std::vector<GameTile>::iterator colIter;
@@ -86,4 +86,103 @@ void Map::DrawMap(sf::RenderWindow &win)
         xpos = 0;
         ypos += this->tileYSize;
     }
+}
+
+void Map::GenerateRooms(int rooms)
+{
+    // std::cout << "Rooms: " << rooms << std::endl;
+    this->AddRooms(rooms);
+    // this->AddDoors();
+    // this->ConnectDoors();
+}
+
+void Map::AddRooms(int rooms)
+{
+    // get the vars ready to generate rooms
+    int width, height, x, y = 0;
+
+    // add `rooms` rooms
+    int r = 0;
+    while (r < rooms) {
+        // roll a random width and height with a maximum size of one third of
+        // the map
+        width = rand() % (this->xSize / 3) + 1;
+        height = rand() % (this->ySize / 3) + 1;
+
+        // don't let the room touch the edge of the map, or painting a wall is
+        // impossible
+        x = rand() % (this->xSize - 2) + 1;
+        y = rand() % (this->ySize - 2) + 1;
+
+        // only paint if the generated room will be in bounds of the map
+        if (x + width <= this->xSize && y + height <= this->ySize) {
+            // std::cout << "Attempting to paint a room of width " << width 
+                      // << " and height " << height << " at " << x << ", " << y 
+                      // << ".." << std::endl;
+            // if PaintRectangle is succesful, we've added a room, so increment
+            // `r` by 1.
+            if ((*this).PaintRectangle(width, height, x, y)) {
+                ++r;
+                // std::cout << "Painted a room! Painted " << r << " rooms so far"
+                //           << std::endl;
+            }
+        }
+    }
+}
+
+void Map::AddDoors()
+{
+
+}
+
+void Map::ConnectDoors()
+{
+
+}
+
+bool Map::PaintRectangle(int width, int height, int x, int y)
+{
+    /** 
+     * A room in a map should look like this:
+     *     -----------    Where:
+     *     |.........|    - is a TopWall
+     *     |.........|    . is a Floor
+     *     |.........|    | is a SideWall (pipe character)
+     *     -----------
+     */ 
+
+    // std::cout << "Checking for floors or walls.." << std::endl;
+    // check for a pre-existing room. If one exists, return false so `AddRooms`
+    // can attempt to generate another.
+    for (int ycoord = y - 1; ycoord <= height + y + 1; ++ycoord) {
+        for (int xcoord = x - 1; xcoord <= width + x + 1; ++xcoord) {
+            // check for floors or walls
+            if (this->map_vec[xcoord][ycoord] == GameTile::Floor ||
+                this->map_vec[xcoord][ycoord] == GameTile::Wall) {
+                return false;
+            }
+            // std::cout << "(" << xcoord << ", " << ycoord << ")"
+            //           << " is not a floor or wall.." << std::endl;
+        }
+    }
+    // std::cout << "No floors or walls found. Painting a room..";
+
+    // we passed the check, so paint a rectangle of Floor tiles surrounded by
+    // walls
+    for (int ycoord = y - 1; ycoord <= height + y + 1; ++ycoord) {
+        for (int xcoord = x - 1; xcoord <= width + x + 1; ++xcoord) {
+            if (ycoord == y - 1 || ycoord == height + y + 1) {
+                this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::TopWall);
+            } else if (xcoord == x - 1 || xcoord == width + x + 1) {
+                this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::SideWall);
+            } else {
+                this->map_vec[ycoord][xcoord] = GameTile("Floor", GraphicTile::Floor);
+            }
+        }
+    }
+
+    // and return true
+    return true;
+
+    
 }
