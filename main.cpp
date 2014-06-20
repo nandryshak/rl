@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "map.hpp"
-#include "tile.hpp"
+#include "graphictile.hpp"
 
 int main()
 {

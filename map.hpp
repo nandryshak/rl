@@ -2,7 +2,7 @@
 #define MAP_H
 
 #include <string>
-#include "tile.hpp"
+#include "gametile.hpp"
 
 class Map {
 public:
@@ -15,7 +15,7 @@ public:
     int xSize;
     void SetTileSize(int y);
     std::string mapName;
-    std::vector<std::vector<Tile> > map_vec;
+    std::vector<std::vector<GameTile> > map_vec;
 private:
     int tileXSize;
     int tileYSize;
