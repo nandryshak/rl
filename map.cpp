@@ -157,8 +157,8 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
     for (int ycoord = y - 1; ycoord <= height + y + 1; ++ycoord) {
         for (int xcoord = x - 1; xcoord <= width + x + 1; ++xcoord) {
             // check for floors or walls
-            if (this->map_vec[xcoord][ycoord] == GameTile::Floor ||
-                this->map_vec[xcoord][ycoord] == GameTile::Wall) {
+            if (this->map_vec[ycoord][xcoord] == GameTile::Floor ||
+                this->map_vec[ycoord][xcoord] == GameTile::Wall) {
                 return false;
             }
             // std::cout << "(" << xcoord << ", " << ycoord << ")"
