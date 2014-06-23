@@ -13,8 +13,8 @@ public:
     void FillMap(char ch);               // fill map with a char. Don't use.
     void PrintMap();                     // print our each tiles char in text
 
-    int ySize;                           // useless right now
     int xSize;
+    int ySize;                           // useless right now
 
     void SetTileSize(int y);
     std::string mapName;
