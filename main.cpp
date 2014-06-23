@@ -14,7 +14,7 @@ int main()
     int charsTall = 24;
 
     Map testMap(charsWide, charsTall);
-    testMap.GenerateRooms(3);
+    testMap.GenerateRooms(10);
 
     int tileHeight = 15;
     int tileWidth = tileHeight / 3 * 2;

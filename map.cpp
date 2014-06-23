@@ -106,6 +106,7 @@ void Map::AddRooms(int rooms)
     while (r < rooms) {
         // roll a random width and height with a maximum size of one third of
         // the map
+
         width = rand() % (this->xSize / 3) + 1;
         height = rand() % (this->ySize / 3) + 1;
 
@@ -115,7 +116,7 @@ void Map::AddRooms(int rooms)
         y = rand() % (this->ySize - 2) + 1;
 
         // only paint if the generated room will be in bounds of the map
-        if (x + width <= this->xSize && y + height <= this->ySize) {
+        if (x + width < this->xSize && y + height < this->ySize) {
             // std::cout << "Attempting to paint a room of width " << width 
                       // << " and height " << height << " at " << x << ", " << y 
                       // << ".." << std::endl;
@@ -154,11 +155,12 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
     // std::cout << "Checking for floors or walls.." << std::endl;
     // check for a pre-existing room. If one exists, return false so `AddRooms`
     // can attempt to generate another.
-    for (int ycoord = y - 1; ycoord <= height + y + 1; ++ycoord) {
-        for (int xcoord = x - 1; xcoord <= width + x + 1; ++xcoord) {
+    for (int ycoord = y - 1; ycoord < height + y; ++ycoord) {
+        for (int xcoord = x - 1; xcoord < width + x; ++xcoord) {
             // check for floors or walls
-            if (this->map_vec[ycoord][xcoord] == GameTile::Floor ||
-                this->map_vec[ycoord][xcoord] == GameTile::Wall) {
+            // std::cout << this->map_vec[ycoord][xcoord].name << std::endl;
+            if (this->map_vec[ycoord][xcoord].name == "Floor" ||
+                this->map_vec[ycoord][xcoord].name == "Wall") {
                 return false;
             }
             // std::cout << "(" << xcoord << ", " << ycoord << ")"
@@ -169,11 +171,11 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
 
     // we passed the check, so paint a rectangle of Floor tiles surrounded by
     // walls
-    for (int ycoord = y - 1; ycoord <= height + y + 1; ++ycoord) {
-        for (int xcoord = x - 1; xcoord <= width + x + 1; ++xcoord) {
-            if (ycoord == y - 1 || ycoord == height + y + 1) {
+    for (int ycoord = y - 1; ycoord <= height + y; ++ycoord) {
+        for (int xcoord = x - 1; xcoord <= width + x; ++xcoord) {
+            if (ycoord == y - 1 || ycoord == height + y) {
                 this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::TopWall);
-            } else if (xcoord == x - 1 || xcoord == width + x + 1) {
+            } else if (xcoord == x - 1 || xcoord == width + x) {
                 this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::SideWall);
             } else {
                 this->map_vec[ycoord][xcoord] = GameTile("Floor", GraphicTile::Floor);
