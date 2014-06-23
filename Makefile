@@ -1,11 +1,21 @@
-CC=mingw32-g++
+# Windows
+ifeq ($(OS),Windows_NT)
+	CC=mingw32-g++
+	INCLUDES=-IC:\SFML-2.1\include
+	LIBS=-LC:\SFML-2.1\lib
+	EXE=game.exe
+	SFMLFLAGS=-lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -mwindows
+else
+# Everything else
+	CC=g++
+	EXE=game
+	SFMLFLAGS=-lsfml-graphics-s -lsfml-window-s -lsfml-system-s
+endif
+
+# cross-platform
 CFLAGS=-c -g -DSFML_STATIC -static-libstdc++ -static-libgcc
-INCLUDES=-IC:\SFML-2.1\include
-LIBS=-LC:\SFML-2.1\lib
 SOURCES=graphictile.cpp gametile.cpp map.cpp main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-EXE=game.exe
-SFMLFLAGS=-lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -mwindows
 
 all: $(SOURCES) $(EXE)
 
