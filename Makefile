@@ -1,5 +1,5 @@
 CC=mingw32-g++
-CFLAGS=-c -O2 -DSFML_STATIC -static-libstdc++ -static-libgcc
+CFLAGS=-c -g -DSFML_STATIC -static-libstdc++ -static-libgcc
 INCLUDES=-IC:\SFML-2.1\include
 LIBS=-LC:\SFML-2.1\lib
 SOURCES=graphictile.cpp gametile.cpp map.cpp main.cpp
@@ -10,7 +10,7 @@ SFMLFLAGS=-lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics-s -lsfml-w
 all: $(SOURCES) $(EXE)
 
 $(EXE): $(OBJECTS)
-	$(CC) $(LIBS) $(OBJECTS) -o $@ $(SFMLFLAGS)
+	$(CC) -g $(LIBS) $(OBJECTS) -o $@ $(SFMLFLAGS)
 
 .cpp.o:
 	$(CC) $(CFLAGS) $(INCLUDES) $< -o $@
