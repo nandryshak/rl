@@ -10,11 +10,11 @@ int main()
     srand(time(0));
 
     // window size (in tiles)
-    int charsWide = 24;
+    int charsWide = 80;
     int charsTall = 24;
 
     Map testMap(charsWide, charsTall);
-    testMap.GenerateRooms(3);
+    testMap.GenerateRooms();
 
     int tileHeight = 15;
     int tileWidth = tileHeight / 3 * 2;
