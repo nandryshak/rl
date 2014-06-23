@@ -3,9 +3,9 @@
 #include "graphictile.hpp"
 #include <cstdlib>
 
-const sf::Color grey(84, 84, 84, 255);
-const sf::Color black(0, 0, 0, 255);
-const sf::Color white(255, 255, 255, 255);
+const sf::Color grey(84, 84, 84);
+const sf::Color black(0, 0, 0);
+const sf::Color white(255, 255, 255);
 
 const GraphicTile GraphicTile::Hallway(grey, black, ' ');
 const GraphicTile GraphicTile::TopWall(grey, black, '-');
