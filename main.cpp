@@ -33,14 +33,42 @@ int main()
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
+            switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::KeyPressed:
+                    switch (event.key.code) {
+                        case sf::Keyboard::Escape:
+                        case sf::Keyboard::Q:
+                            window.close();
+                            break;
+                        case sf::Keyboard::Return:
+                            window.clear(sf::Color::Black);
+                            testMap.ClearMap();
+                            testMap.GenerateRooms();
+                            testMap.DrawMap(window);
+                            window.display();
+                            break;
+                        default:
+                            break;
+                    }
+                        
+                    break;
+                case sf::Event::KeyReleased:
+                    switch (event.key.code) {
+                        default:
+                            break;
+                    }
+                    break;
+                case sf::Event::GainedFocus:
+                    window.clear(sf::Color::Black);
+                    testMap.DrawMap(window);
+                    window.display();
+                    break;
+                default:
+                    break;
             }
-        }
-
-        // input
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            window.close();
         }
     }
 
