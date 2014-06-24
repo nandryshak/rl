@@ -160,8 +160,8 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
 
     // check for a pre-existing room. If one exists, return false so `AddRooms`
     // can attempt to generate another.
-    for (int ycoord = y - 1; ycoord < height + y; ++ycoord) {
-        for (int xcoord = x - 1; xcoord < width + x; ++xcoord) {
+    for (int ycoord = y - 1; ycoord <= height + y; ++ycoord) {
+        for (int xcoord = x - 1; xcoord <= width + x; ++xcoord) {
             // check for floors or walls
             if (this->map_vec[ycoord][xcoord].name == "Floor" ||
                 this->map_vec[ycoord][xcoord].name == "Wall") {
@@ -172,7 +172,7 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
         }
     }
 
-    GameTile TopWall = GameTile::TopWall;
+    GameTile TopWall = GameTile("Wall", GraphicTile::TopWall);
 
     // we passed the check, so paint a rectangle of Floor tiles surrounded by
     // walls
