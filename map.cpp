@@ -32,6 +32,18 @@ void Map::FillMap(char ch)      // test member please ignore
     }
 }
 
+void Map::ClearMap()
+{
+    std::vector<std::vector<GameTile> >::iterator rowIter;
+    std::vector<GameTile>::iterator colIter;
+    for (rowIter=this->map_vec.begin(); rowIter!=this->map_vec.end(); ++rowIter) {
+        for (colIter=(*rowIter).begin(); colIter!=(*rowIter).end(); ++colIter) {
+            GameTile tmpTile("Empty", GraphicTile(sf::Color::Black, sf::Color::Black, ' '));
+            *colIter = tmpTile;
+        }
+    }
+}
+
 void Map::PrintMap()
 {
     std::vector<std::vector<GameTile> >::const_iterator rowIter;
@@ -90,7 +102,6 @@ void Map::DrawMap(sf::RenderWindow &win)
 
 void Map::GenerateRooms(int rooms)
 {
-    // std::cout << "Rooms: " << rooms << std::endl;
     this->AddRooms(rooms);
     // this->AddDoors();
     // this->ConnectDoors();
@@ -117,15 +128,10 @@ void Map::AddRooms(int rooms)
 
         // only paint if the generated room will be in bounds of the map
         if (x + width < this->xSize && y + height < this->ySize) {
-            // std::cout << "Attempting to paint a room of width " << width 
-                      // << " and height " << height << " at " << x << ", " << y 
-                      // << ".." << std::endl;
             // if PaintRectangle is succesful, we've added a room, so increment
             // `r` by 1.
             if ((*this).PaintRectangle(width, height, x, y)) {
                 ++r;
-                // std::cout << "Painted a room! Painted " << r << " rooms so far"
-                //           << std::endl;
             }
         }
     }
@@ -152,29 +158,28 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
      *     -----------
      */ 
 
-    // std::cout << "Checking for floors or walls.." << std::endl;
     // check for a pre-existing room. If one exists, return false so `AddRooms`
     // can attempt to generate another.
     for (int ycoord = y - 1; ycoord < height + y; ++ycoord) {
         for (int xcoord = x - 1; xcoord < width + x; ++xcoord) {
             // check for floors or walls
-            // std::cout << this->map_vec[ycoord][xcoord].name << std::endl;
             if (this->map_vec[ycoord][xcoord].name == "Floor" ||
                 this->map_vec[ycoord][xcoord].name == "Wall") {
+                // return false so the caller knows he tried to paint a room on
+                // a room.
                 return false;
             }
-            // std::cout << "(" << xcoord << ", " << ycoord << ")"
-            //           << " is not a floor or wall.." << std::endl;
         }
     }
-    // std::cout << "No floors or walls found. Painting a room..";
+
+    GameTile TopWall = GameTile::TopWall;
 
     // we passed the check, so paint a rectangle of Floor tiles surrounded by
     // walls
     for (int ycoord = y - 1; ycoord <= height + y; ++ycoord) {
         for (int xcoord = x - 1; xcoord <= width + x; ++xcoord) {
             if (ycoord == y - 1 || ycoord == height + y) {
-                this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::TopWall);
+                this->map_vec[ycoord][xcoord] = TopWall;
             } else if (xcoord == x - 1 || xcoord == width + x) {
                 this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::SideWall);
             } else {
@@ -185,6 +190,4 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
 
     // and return true
     return true;
-
-    
 }

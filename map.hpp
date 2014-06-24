@@ -11,6 +11,7 @@ public:
 
     void DrawMap(sf::RenderWindow &win); // main draw function
     void FillMap(char ch);               // fill map with a char. Don't use.
+    void ClearMap();                     // Makes all the tiles black and "Empty"
     void PrintMap();                     // print our each tiles char in text
 
     int xSize;
