@@ -9,7 +9,7 @@ else
 # Everything else
 	CC=g++
 	EXE=game
-	SFMLFLAGS=-lsfml-graphics-s -lsfml-window-s -lsfml-system-s
+	SFMLFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
 endif
 
 # cross-platform
