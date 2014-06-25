@@ -14,7 +14,7 @@ endif
 
 # cross-platform
 CFLAGS=-c -g -DSFML_STATIC -static-libstdc++ -static-libgcc -std=c++0x
-SOURCES=entity.cpp factory.cpp graphictile.cpp gametile.cpp map.cpp window.cpp main.cpp
+SOURCES=entity.cpp factory.cpp graphictile.cpp gametile.cpp map.cpp window.cpp global.cpp main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 
 all: $(SOURCES) $(EXE)
