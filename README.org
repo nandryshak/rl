@@ -13,5 +13,7 @@
     
     g++
     
+    [[http://gnuwin32.sourceforge.net/packages/make.htm][GNU Make]]
+
     [[http://sfml-dev.org/download/sfml/2.1/][SFML 2.1]]
     - Arch Linux: =sudo pacman -S sfml=
