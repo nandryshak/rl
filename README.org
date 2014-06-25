@@ -1,0 +1,17 @@
+* nannyRL
+** Description
+   This is a basic roguelike game made by Nick Andryshak.
+** Dependencies
+*** Windows
+    [[http://www.mingw.org/][mingw32-g++]]
+    
+    [[http://gnuwin32.sourceforge.net/packages/make.htm][GNU Make]]
+    
+    [[http://sfml-dev.org/download/sfml/2.1/][SFML 2.1]]
+*** GNU/Linux
+    make
+    
+    g++
+    
+    [[http://sfml-dev.org/download/sfml/2.1/][SFML 2.1]]
+    - Arch Linux: =sudo pacman -S sfml=
