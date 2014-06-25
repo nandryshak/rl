@@ -3,20 +3,19 @@
 #include <string>
 #include <iostream>
 
-const GameTile GameTile::Hallway("Hallway", GraphicTile::Hallway);
-const GameTile GameTile::TopWall("Wall", GraphicTile::TopWall);
-const GameTile GameTile::SideWall("Wall", GraphicTile::SideWall);
-const GameTile GameTile::Floor("Floor", GraphicTile::Floor); 
-const GameTile GameTile::Door("Door", GraphicTile::Door);
-const GameTile GameTile::Wall("Wall", GraphicTile::SideWall); // Generic wall type
-                                                              // only used for
-                                                              // comparison
+const GameTile GameTile::Player("Player", GraphicTile::grPlayer, false);
+const GameTile GameTile::Hallway("Hallway", GraphicTile::grHallway, true);
+const GameTile GameTile::TopWall("Wall", GraphicTile::grTopWall, false);
+const GameTile GameTile::SideWall("Wall", GraphicTile::grSideWall, false);
+const GameTile GameTile::Floor("Floor", GraphicTile::grFloor, true);
+const GameTile GameTile::Door("Door", GraphicTile::grDoor, false);
+const GameTile GameTile::Wall("Wall", GraphicTile::grSideWall, false);
 
-GameTile::GameTile(std::string n, GraphicTile gt) :
+GameTile::GameTile(std::string n, GraphicTile gt, bool passable) :
     name(n),
-    grTile(gt)
+    grTile(gt),
+    isPassable(passable)
 {
-    
 }
 
 GameTile::GameTile(const GameTile &gtSource)
@@ -36,4 +35,9 @@ bool GameTile::operator == (const GameTile& right)
     } else {
         return false;
     }
+}
+
+std::ostream& operator << (std::ostream &strm, const GameTile &t)
+{
+    return strm << t.name;
 }

@@ -7,12 +7,12 @@ const sf::Color grey(84, 84, 84);
 const sf::Color black(0, 0, 0);
 const sf::Color white(255, 255, 255);
 
-const GraphicTile GraphicTile::Hallway(grey, black, ' ');
-const GraphicTile GraphicTile::TopWall(grey, black, '-');
-const GraphicTile GraphicTile::SideWall(grey, black, '|');
-const GraphicTile GraphicTile::Floor(grey, black, '.');
-const GraphicTile GraphicTile::Door(white, black, '+');
-const GraphicTile GraphicTile::Player(white, black, '@');
+const GraphicTile GraphicTile::grHallway(grey, black, ' ');
+const GraphicTile GraphicTile::grTopWall(grey, black, '-');
+const GraphicTile GraphicTile::grSideWall(grey, black, '|');
+const GraphicTile GraphicTile::grFloor(grey, black, '.');
+const GraphicTile GraphicTile::grDoor(white, black, '+');
+const GraphicTile GraphicTile::grPlayer(white, black, '@');
 
 GraphicTile::GraphicTile(sf::Color fg,
            sf::Color bg,
@@ -23,11 +23,14 @@ GraphicTile::GraphicTile(sf::Color fg,
 {
 }
 
-GraphicTile::~GraphicTile()
+GraphicTile::GraphicTile(char ch) :
+    fgColor(getRandomColor()),
+    bgColor(getRandomColor()),
+    graphicTileChar(ch)
 {
 }
 
-void GraphicTile::DrawGraphicTile(int x, int y)
+GraphicTile::~GraphicTile()
 {
 }
 

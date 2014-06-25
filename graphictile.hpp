@@ -10,17 +10,17 @@ char getRandomChar();
 class GraphicTile {
 public:
     GraphicTile(sf::Color fg = getRandomColor(), sf::Color bg = getRandomColor(), char ch = getRandomChar());
+    GraphicTile(char ch);
     ~GraphicTile();
-    void DrawGraphicTile(int x, int y);
     sf::Color fgColor;
     sf::Color bgColor;
     char graphicTileChar;
-    static const GraphicTile Hallway;
-    static const GraphicTile TopWall;
-    static const GraphicTile SideWall;
-    static const GraphicTile Floor;
-    static const GraphicTile Door;
-    static const GraphicTile Player;
+    static const GraphicTile grHallway;
+    static const GraphicTile grTopWall;
+    static const GraphicTile grSideWall;
+    static const GraphicTile grFloor;
+    static const GraphicTile grDoor;
+    static const GraphicTile grPlayer;
 private:
 };
 

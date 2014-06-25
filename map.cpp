@@ -1,13 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
+#include <list>
 #include "map.hpp"
 #include "gametile.hpp"
 #include "graphictile.hpp"
-#include <vector>
+#include "entity.hpp"
 
 Map::Map(int x, int y) : xSize(x), ySize(y) // useless size vars
 {
-    GameTile emptyTile("Nothing", GraphicTile::Hallway);
+    GameTile emptyTile("Nothing", GraphicTile::grHallway, true);
     std::vector<GameTile> row(x, emptyTile);
     std::vector<std::vector<GameTile> > mv(y, row);
     map_vec = mv;
@@ -62,44 +64,6 @@ void Map::SetTileSize(int y)
     tileXSize = y / 3 * 2;
 }
 
-void Map::DrawMap(sf::RenderWindow &win)
-{
-    // for each tile in the map, draw it
-    sf::Font font;
-    font.loadFromFile("DroidSansMono.ttf");
-
-    sf::Text text;
-    text.setCharacterSize(this->tileYSize);
-    text.setFont(font);
-
-    sf::RectangleShape bg;
-
-    int xpos = 0;
-    int ypos = 0;
-    std::vector<std::vector<GameTile> >::const_iterator rowIter;
-    std::vector<GameTile>::const_iterator colIter;
-    for (rowIter=this->map_vec.begin(); rowIter!=this->map_vec.end(); ++rowIter) {
-        for (colIter=(*rowIter).begin(); colIter!=(*rowIter).end(); ++colIter) {
-
-            // draw tile bg
-            bg.setSize(sf::Vector2f(this->tileXSize, this->tileYSize));
-            bg.setPosition(xpos, ypos);
-            bg.setFillColor((*colIter).grTile.bgColor);
-            win.draw(bg);
-
-            // draw tile text
-            text.setString((*colIter).grTile.graphicTileChar);
-            text.setColor((*colIter).grTile.fgColor);
-            text.setPosition(xpos + 1, ypos - 4);
-            win.draw(text);
-
-            xpos += this->tileXSize;
-        }
-        xpos = 0;
-        ypos += this->tileYSize;
-    }
-}
-
 void Map::GenerateRooms(int rooms)
 {
     this->AddRooms(rooms);
@@ -139,24 +103,22 @@ void Map::AddRooms(int rooms)
 
 void Map::AddDoors()
 {
-
 }
 
 void Map::ConnectDoors()
 {
-
 }
 
 bool Map::PaintRectangle(int width, int height, int x, int y)
 {
-    /** 
+    /**
      * A room in a map should look like this:
      *     -----------    Where:
      *     |.........|    - is a TopWall
      *     |.........|    . is a Floor
      *     |.........|    | is a SideWall (pipe character)
      *     -----------
-     */ 
+     */
 
     // check for a pre-existing room. If one exists, return false so `AddRooms`
     // can attempt to generate another.
@@ -172,18 +134,16 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
         }
     }
 
-    GameTile TopWall = GameTile::TopWall;
-
     // we passed the check, so paint a rectangle of Floor tiles surrounded by
     // walls
     for (int ycoord = y - 1; ycoord <= height + y; ++ycoord) {
         for (int xcoord = x - 1; xcoord <= width + x; ++xcoord) {
             if (ycoord == y - 1 || ycoord == height + y) {
-                this->map_vec[ycoord][xcoord] = TopWall;
+                this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::grTopWall);
             } else if (xcoord == x - 1 || xcoord == width + x) {
-                this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::SideWall);
+                this->map_vec[ycoord][xcoord] = GameTile("Wall", GraphicTile::grSideWall);
             } else {
-                this->map_vec[ycoord][xcoord] = GameTile("Floor", GraphicTile::Floor);
+                this->map_vec[ycoord][xcoord] = GameTile("Floor", GraphicTile::grFloor);
             }
         }
     }
@@ -191,3 +151,4 @@ bool Map::PaintRectangle(int width, int height, int x, int y)
     // and return true
     return true;
 }
+

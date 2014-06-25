@@ -3,6 +3,10 @@
 #include <iostream>
 #include "map.hpp"
 #include "graphictile.hpp"
+#include "gametile.hpp"
+#include "window.hpp"
+
+std::unique_ptr<sf::RenderWindow> window;
 
 int main()
 {
@@ -22,55 +26,55 @@ int main()
 
     int screenWidth = tileWidth * charsWide;
     int screenHeight = tileHeight * charsTall;
-    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "nannyRL",
-                            sf::Style::Titlebar | sf::Style::Close);
-    window.clear();
+    // window(new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), "nannyRL",
+    //        sf::Style::Titlebar | sf::Style::Close));
+    std::unique_ptr<sf::RenderWindow> window( new sf::RenderWindow( sf::VideoMode(screenWidth, screenHeight), "Test"));
 
-    testMap.DrawMap(window);
+    // window.clear();
+    // window.display();
 
-    window.display();
+    GameWindow gamewindow(screenWidth, screenHeight, "nannyRL", testMap);
+    gamewindow.InitializeWindow();
 
-    while (window.isOpen()) {
+    std::cout << "isOpen()? " << window->isOpen() << std::endl;
+
+    while (window->isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window->pollEvent(event)) {
             switch (event.type) {
-                case sf::Event::Closed:
-                    window.close();
+            case sf::Event::Closed:
+                window->close();
+                break;
+            case sf::Event::KeyPressed:
+                switch (event.key.code) {
+                case sf::Keyboard::Escape:
+                case sf::Keyboard::Q:
+                    window->close();
                     break;
-                case sf::Event::KeyPressed:
-                    switch (event.key.code) {
-                        case sf::Keyboard::Escape:
-                        case sf::Keyboard::Q:
-                            window.close();
-                            break;
-                        case sf::Keyboard::Return:
-                            window.clear(sf::Color::Black);
-                            testMap.ClearMap();
-                            testMap.GenerateRooms();
-                            testMap.DrawMap(window);
-                            window.display();
-                            break;
-                        default:
-                            break;
-                    }
-                        
-                    break;
-                case sf::Event::KeyReleased:
-                    switch (event.key.code) {
-                        default:
-                            break;
-                    }
-                    break;
-                case sf::Event::GainedFocus:
-                    window.clear(sf::Color::Black);
-                    testMap.DrawMap(window);
-                    window.display();
+                case sf::Keyboard::Return:
+                    gamewindow.RegenerateRooms();
                     break;
                 default:
                     break;
+                }
+
+                break;
+            case sf::Event::KeyReleased:
+                switch (event.key.code) {
+                default:
+                    break;
+                }
+                break;
+            case sf::Event::GainedFocus:
+                gamewindow.Redraw();
+                break;
+            default:
+                break;
             }
         }
     }
 
+    std::cout << gamewindow << std::endl;
     return 0;
 }
+
