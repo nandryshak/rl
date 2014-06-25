@@ -4,8 +4,7 @@
 #include "window.hpp"
 #include "map.hpp"
 #include "entity.hpp"
-
-extern std::unique_ptr<sf::RenderWindow> window;
+#include "global.hpp"
 
 GameWindow::GameWindow(int w, int h, std::string n, Map initMap)
 {
@@ -13,15 +12,12 @@ GameWindow::GameWindow(int w, int h, std::string n, Map initMap)
     height = h;
     name = n;
     map = initMap;
-
-    // sf::RenderWindow window(sf::VideoMode(w, h), n, sf::Style::Titlebar | sf::Style::Close);
 }
 
 GameWindow::~GameWindow()
 {
 }
 
-// TODO
 void GameWindow::DrawMap(Map map)
 {
     // for each tile in the map, draw it
@@ -48,14 +44,14 @@ void GameWindow::DrawMap(Map map)
             bg.setPosition(xpos, ypos);
             bg.setFillColor((*colIter).grTile.bgColor);
             // this->window.draw(bg);
-            (*::window).draw(bg);
+            (*::MainGameWindow).draw(bg);
 
             // draw tile text
             text.setString((*colIter).grTile.graphicTileChar);
             text.setColor((*colIter).grTile.fgColor);
             text.setPosition(xpos + 1, ypos - 4);
             // this->window.draw(text);
-            (*::window).draw(text);
+            (*::MainGameWindow).draw(text);
 
             xpos += map.tileXSize;
         }
@@ -64,43 +60,40 @@ void GameWindow::DrawMap(Map map)
     }
 }
 
-// TODO
 void GameWindow::DrawEntity(Entity entity)
 {
     
 }
 
-// TODO
 void GameWindow::DrawPlayer(Entity player)
 {
 }
 
-// TODO
 void GameWindow::DrawEnemyList(std::list<Entity> entList)
 {
 }
 
 void GameWindow::InitializeWindow()
 {
-    (*::window).clear();
+    (*::MainGameWindow).clear();
     this->DrawMap(this->map);
-    (*::window).display();
+    (*::MainGameWindow).display();
 }
 
 void GameWindow::RegenerateRooms()
 {
-    (*::window).clear(sf::Color::Black);
+    (*::MainGameWindow).clear(sf::Color::Black);
     this->map.ClearMap();
     this->map.GenerateRooms();
     this->DrawMap(this->map);
-    (*::window).display();
+    (*::MainGameWindow).display();
 }
 
 void GameWindow::Redraw()
 {
-    (*::window).clear(sf::Color::Black);
+    (*::MainGameWindow).clear(sf::Color::Black);
     this->DrawMap(this->map);
-    (*::window).display();
+    (*::MainGameWindow).display();
 }
 
 std::ostream& operator << (std::ostream &strm, const GameWindow &gw)

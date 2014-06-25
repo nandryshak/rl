@@ -5,8 +5,7 @@
 #include "graphictile.hpp"
 #include "gametile.hpp"
 #include "window.hpp"
-
-std::unique_ptr<sf::RenderWindow> window;
+#include "global.hpp"
 
 int main()
 {
@@ -26,30 +25,22 @@ int main()
 
     int screenWidth = tileWidth * charsWide;
     int screenHeight = tileHeight * charsTall;
-    // window(new sf::RenderWindow(sf::VideoMode(screenWidth, screenHeight), "nannyRL",
-    //        sf::Style::Titlebar | sf::Style::Close));
-    std::unique_ptr<sf::RenderWindow> window( new sf::RenderWindow( sf::VideoMode(screenWidth, screenHeight), "Test"));
-
-    // window.clear();
-    // window.display();
 
     GameWindow gamewindow(screenWidth, screenHeight, "nannyRL", testMap);
     gamewindow.InitializeWindow();
 
-    std::cout << "isOpen()? " << window->isOpen() << std::endl;
-
-    while (window->isOpen()) {
+    while (::MainGameWindow->isOpen()) {
         sf::Event event;
-        while (window->pollEvent(event)) {
+        while (::MainGameWindow->pollEvent(event)) {
             switch (event.type) {
             case sf::Event::Closed:
-                window->close();
+                ::MainGameWindow->close();
                 break;
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
                 case sf::Keyboard::Escape:
                 case sf::Keyboard::Q:
-                    window->close();
+                    ::MainGameWindow->close();
                     break;
                 case sf::Keyboard::Return:
                     gamewindow.RegenerateRooms();
@@ -74,7 +65,6 @@ int main()
         }
     }
 
-    std::cout << gamewindow << std::endl;
     return 0;
 }
 

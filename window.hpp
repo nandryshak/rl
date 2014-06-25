@@ -8,8 +8,6 @@
 #include "entity.hpp"
 #include "map.hpp"
 
-extern std::unique_ptr<sf::RenderWindow> window;
-
 class GameWindow
 {
 public:
