@@ -60,13 +60,25 @@ void GameWindow::DrawMap(Map map)
     }
 }
 
-void GameWindow::DrawEntity(Entity entity)
+void GameWindow::DrawEntity(Entity entity, int x, int y)
 {
-    
-}
+    sf::RectangleShape bg;
+    sf::Font font;
+    font.loadFromFile("DroidSansMono.ttf");
+    sf::Text text;
+    text.setCharacterSize(this->map.tileYSize);
+    text.setFont(font);
 
-void GameWindow::DrawPlayer(Entity player)
-{
+    bg.setSize(sf::Vector2f(this->map.tileXSize, this->map.tileYSize));
+    bg.setPosition(x, y);
+    bg.setFillColor(entity.tile.bgColor);
+
+    text.setString(entity.tile.graphicTileChar);
+    text.setColor(entity.tile.fgColor);
+    text.setPosition(x + 1, y +- 4);
+    
+    (*::MainGameWindow).draw(bg);
+    (*::MainGameWindow).draw(text);
 }
 
 void GameWindow::DrawEnemyList(std::list<Entity> entList)
@@ -78,6 +90,11 @@ void GameWindow::InitializeWindow()
     (*::MainGameWindow).clear();
     this->DrawMap(this->map);
     (*::MainGameWindow).display();
+}
+
+void GameWindow::InitializePlayer()
+{
+    
 }
 
 void GameWindow::RegenerateRooms()

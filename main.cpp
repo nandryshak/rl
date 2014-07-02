@@ -28,6 +28,7 @@ int main()
 
     GameWindow gamewindow(screenWidth, screenHeight, "nannyRL", testMap);
     gamewindow.InitializeWindow();
+    gamewindow.InitializePlayer();
 
     while (::MainGameWindow->isOpen()) {
         sf::Event event;

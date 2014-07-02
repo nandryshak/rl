@@ -15,7 +15,7 @@ public:
     ~GameWindow();
 
     // members
-    void DrawEntity(Entity entity);
+    void DrawEntity(Entity entity, int x, int y);
 
     // MOVE THESE FROM OTHER FILES
     // map.cpp
@@ -24,6 +24,7 @@ public:
     void DrawEnemyList(std::list<Entity> entList);
     // main.cpp
     void InitializeWindow();
+    void InitializePlayer();
     void RegenerateRooms();
     void Redraw();
 
