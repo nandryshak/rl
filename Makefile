@@ -5,11 +5,13 @@ ifeq ($(OS),Windows_NT)
 	LIBS=-LC:\SFML-2.1\lib
 	EXE=game.exe
 	SFMLFLAGS=-lmingw32 -luser32 -lgdi32 -lwinmm -ldxguid -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -mwindows
+	DEL=del
 else
 # Everything else
 	CC=g++
 	EXE=game
 	SFMLFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
+	DEL=rm
 endif
 
 # cross-platform
@@ -26,4 +28,4 @@ $(EXE): $(OBJECTS)
 	$(CC) $(CFLAGS) $(INCLUDES) $< -o $@
 
 clean:
-	del *.o game.exe
+	$(DEL) *.o $(EXE)
